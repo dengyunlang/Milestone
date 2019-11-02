@@ -1,0 +1,76 @@
+<!-- templates/profile.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<style type="text/css">
+    .vote:hover{
+        cursor: pointer;
+    }
+    .del:hover{
+        cursor: pointer;
+    }
+
+</style>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    {% if current_user.role == 1 %}
+         <form method="POST" action="/addcandidate" style="margin:auto;width: 800px">
+            <input class="input" required="true" style="float:left;width:250px" type="text" name="candidateid" placeholder="please enter candidate id" autofocus="">
+            <input class="input" required="true"  style="float:left;width:250px;margin-left: 60px" type="text" name="name" placeholder="please enter candidate name">
+            <button class="button is-block is-info" style="float: right">add candidate</button>
+        </form>
+    {% endif %}
+
+    <table class="pure-table" style="margin:50px auto;width:800px;color: gray">
+        <thead>
+        <th>candidate id</th>
+        <th>candidate name</th>
+        <th>number of ballots</th>
+        <th id="id" style="visibility: hidden">id</th>
+        {% if current_user.role == 0 %}
+            <th>vote for candidate</th>
+        {% endif %}
+        {% if current_user.role == 1 %}
+            <th>delete candidate</th>
+        {% endif %}
+        </thead>
+        <tbody>
+          <meta charset="UTF-8">
+          {% for candidate in candidates %}
+            <tr class="pure-table-odd">
+                <td>{{ candidate.candidateid}}</td>
+                <td>{{ candidate.name}}</td>
+                <td>{{ candidate.totalballot}}</td>
+                <td style="visibility: hidden;">{{ candidate.id}}</td>
+                {% if current_user.role == 0 %}
+                    <td class="vote" onclick='vote(this)' style="color: green">vote</td>
+                {% endif %}
+                {% if current_user.role == 1 %}
+                    <td class="del" onclick='del(this)' style="color: red">delete</td>
+                {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+function vote() {
+    {#console.log(value..previousSibling);#}
+}
+function del(event) {
+    $.post( "/deletecandidate", {
+        id: $(event).prev().text()
+    },function(){
+        window.location.reload()
+    });
+}
+
+function vote(event) {
+    $.post( "/vote", {
+        id: $(event).prev().text()
+    },function(){
+        window.location.reload()
+    });
+}
+</script>
+{% endblock %}
