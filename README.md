@@ -4,7 +4,7 @@ Step to run the Server:
 option1:
 $ pip install flask
 
-$ export FLASK_APP=__init__.py
+$ export FLASK_APP= __init__.py
 
 $ flask run
 
