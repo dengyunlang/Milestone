@@ -12,8 +12,9 @@ class User(UserMixin, db.Model):
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    username = db.Column(db.String(100), unique=True)
+    username = db.Column(db.String(100))
     action = db.Column(db.String(100))
+    time = db.Column(db.DateTime)
 
 class Candidate(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
