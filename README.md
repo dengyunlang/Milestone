@@ -7,6 +7,7 @@ option1:
 
 # $ export FLASK_APP= __init__.py
 
+
 # $ flask run
 
 if you see: 
